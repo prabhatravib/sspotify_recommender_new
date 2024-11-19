@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spotify Song Recommender</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Spotify Song Recommender</h1>
+
+    <!-- Input for the Spotify Playlist URL -->
+    <form id="playlist-form">
+        <label for="playlist_url">Enter Spotify Playlist URL:</label>
+        <input type="text" id="playlist_url" name="playlist_url" required>
+        <button type="button" onclick="submitPlaylist()">Load Playlist</button>
+    </form>
+
+    <!-- Display area for status messages -->
+    <p id="status-output" style="margin-top: 10px; font-weight: bold;"></p>
+
+    <!-- Recommend Song Button -->
+    <button id="recommend-button" type="button" style="display: none; margin-top: 10px;" onclick="getRecommendation()">Recommend Song</button>
+
+    <!-- Generating Song Message -->
+    <p id="loading-output" style="margin-top: 10px; font-style: italic; color: gray; display: none;">Searching for a song...</p>
+
+    <!-- Display area for recommendation -->
+    <p id="recommendation-output" style="margin-top: 10px; font-weight: bold;"></p>
+
+    <script>
+        // Function to submit the playlist URL
+        function submitPlaylist() {
+            const playlistUrl = $('#playlist_url').val();
+            $.ajax({
+                url: '/submit_playlist',
+                type: 'POST',
+                data: { playlist_url: playlistUrl },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('#status-output').text(response.message);  // Display success message
+                        $('#recommend-button').show();  // Show the Recommend Song button
+                    } else {
+                        $('#status-output').text(response.message);  // Display error message
+                        $('#recommend-button').hide();  // Hide the Recommend Song button
+                    }
+                },
+                error: function() {
+                    $('#status-output').text("Error: Unable to load playlist. Please check the URL and try again.");
+                    $('#recommend-button').hide();  // Hide the Recommend Song button
+                }
+            });
+        }
+
+        // Function to get a song recommendation
+        function getRecommendation() {
+            $('#loading-output').show();  // Show the "Generating song" message
+            $('#recommendation-output').text('');  // Clear the previous recommendation
+
+            $.ajax({
+                url: '/get_recommendation',
+                type: 'POST',
+                success: function(response) {
+                    $('#loading-output').hide();  // Hide the "Generating song" message
+                    if (response.status === 'success') {
+                        $('#recommendation-output').html(`<strong>Recommended Song:</strong> ${response.recommendation}`);
+                    } else {
+                        $('#recommendation-output').text(response.message);  // Display error message
+                    }
+                },
+                error: function() {
+                    $('#loading-output').hide();  // Hide the "Generating song" message
+                    $('#recommendation-output').text("Error: Unable to retrieve recommendation. Please try again.");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

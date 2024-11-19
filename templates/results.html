@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommendations</title>
+</head>
+<body>
+    <h1>Recommended Songs</h1>
+    <ul>
+        {% for rec in recommendations %}
+            <li>{{ rec['name'] }} by {{ rec['artist'] }}</li>
+        {% endfor %}
+    </ul>
+    <a href="/">Back</a>
+</body>
+</html>

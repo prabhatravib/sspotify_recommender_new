@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommendation</title>
+</head>
+<body>
+    <h1>Recommended Song</h1>
+    
+    {% if song %}
+        <p><strong>Recommended Song:</strong> {{ song }}</p>
+    {% endif %}
+
+    <form action="/get_recommendation" method="post">
+        <button type="submit">Recommended Song</button>
+    </form>
+</body>
+</html>
