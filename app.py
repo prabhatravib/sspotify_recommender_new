@@ -1,28 +1,26 @@
-from flask import Flask, request, render_template
-from dynamic_playlist_analysis import process_playlist_and_recommend_song
-import os
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 # Global variable to store the playlist link
 playlist_link = None
 
-@app.route('/')
+@app.route("/")
 def home():
     # Render the homepage with the existing playlist (if any)
     return render_template('index.html', playlist_link=playlist_link)
 
-@app.route('/submit_playlist', methods=['POST'])
+@app.route("/submit_playlist", methods=["POST"])
 def submit_playlist():
     global playlist_link
-    playlist_url = request.form.get('playlist_url')
+    playlist_url = request.form.get("playlist_url")
     if not playlist_url:
         return render_template(
             'index.html',
             error="Please provide a valid playlist URL.",
             playlist_link=playlist_link
         )
-    
+
     playlist_link = playlist_url
     return render_template(
         'index.html',
@@ -41,11 +39,13 @@ def get_recommendation():
         )
 
     try:
-        result = process_playlist_and_recommend_song(playlist_link)
+        # Simulate a recommendation process
+        recommendation = "Song Name - Album Name"
         return render_template(
             'results.html',
-            message=result["message"],
-            recommendation=result["recommendation"]
+            message="Musical taste understood",
+            recommendation=recommendation,
+            playlist_link=playlist_link
         )
     except Exception as e:
         return render_template(
