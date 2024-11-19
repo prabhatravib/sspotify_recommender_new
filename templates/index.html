@@ -59,7 +59,7 @@
     <div class="main-container">
         <h1>Welcome to Spotify Recommender</h1>
         <p>Get music recommendations tailored to your taste!</p>
-        <form id="playlistForm" action="/submit_playlist" method="POST">
+        <form action="/submit_playlist" method="POST">
             <label for="playlist_url">Enter Spotify Playlist Link:</label>
             <input
                 type="url"
@@ -70,9 +70,19 @@
             />
             <button type="submit" class="btn btn-custom" style="margin-top: 15px;">Submit Playlist</button>
         </form>
-        <form id="recommendationForm" action="/get_recommendation" method="POST" style="margin-top: 20px;">
+        <form action="/get_recommendation" method="POST" style="margin-top: 20px;">
             <button type="submit" class="btn btn-custom">Get Recommendation</button>
         </form>
+        {% if success %}
+            <div class="alert alert-success" role="alert" style="margin-top: 20px;">
+                {{ success }}
+            </div>
+        {% endif %}
+        {% if error %}
+            <div class="alert alert-danger" role="alert" style="margin-top: 20px;">
+                {{ error }}
+            </div>
+        {% endif %}
     </div>
 </body>
 </html>
