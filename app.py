@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from dynamic_playlist_analysis import process_playlist_and_recommend_song  # Import analysis function
 
 app = Flask(__name__)
 
@@ -39,11 +40,13 @@ def get_recommendation():
         )
 
     try:
-        # Simulate a recommendation process
-        recommendation = "Shape of You - Divide"
+        # Call the function to process the playlist and get a recommendation
+        result = process_playlist_and_recommend_song(playlist_link)
+        recommendation = result.get("recommendation", "No recommendation available")
+        message = result.get("message", "Something went wrong")
         return render_template(
             'results.html',
-            message="Musical taste understood",
+            message=message,
             recommendation=recommendation,
             playlist_link=playlist_link
         )
