@@ -9,25 +9,49 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1DB954, #191414);
-            color: #fff;
+            background: linear-gradient(145deg, #3a6186, #89253e);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
         }
         .main-container {
-            margin: 0 auto;
-            max-width: 600px;
-            text-align: center;
-            padding: 2rem;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
         }
         .btn-custom {
             background-color: #1DB954;
             border: none;
             padding: 10px 20px;
             border-radius: 30px;
-            color: #fff;
-            transition: all 0.3s ease;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         .btn-custom:hover {
             background-color: #14833B;
+        }
+        input[type="url"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 30px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+        label {
+            margin-top: 20px;
+            display: block;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -35,7 +59,20 @@
     <div class="main-container">
         <h1>Welcome to Spotify Recommender</h1>
         <p>Get music recommendations tailored to your taste!</p>
-        <a href="/recommend" class="btn btn-custom">Get Recommendations</a>
+        <form id="playlistForm" action="/submit_playlist" method="POST">
+            <label for="playlist_url">Enter Spotify Playlist Link:</label>
+            <input
+                type="url"
+                id="playlist_url"
+                name="playlist_url"
+                placeholder="e.g., https://open.spotify.com/playlist/..."
+                required
+            />
+            <button type="submit" class="btn btn-custom" style="margin-top: 15px;">Submit Playlist</button>
+        </form>
+        <form id="recommendationForm" action="/get_recommendation" method="POST" style="margin-top: 20px;">
+            <button type="submit" class="btn btn-custom">Get Recommendation</button>
+        </form>
     </div>
 </body>
 </html>
