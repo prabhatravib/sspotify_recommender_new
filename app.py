@@ -30,7 +30,7 @@ def submit_playlist():
         playlist_link=playlist_link
     )
 
-@app.route('/get_recommendation', methods=['POST'])
+@app.route("/get_recommendation", methods=["POST"])
 def get_recommendation():
     global playlist_link
     if not playlist_link:
@@ -41,8 +41,12 @@ def get_recommendation():
         )
 
     try:
-        recommendations = process_playlist_and_recommend_song(playlist_link)
-        return render_template('results.html', recommendations=recommendations)
+        result = process_playlist_and_recommend_song(playlist_link)
+        return render_template(
+            'results.html',
+            message=result["message"],
+            recommendation=result["recommendation"]
+        )
     except Exception as e:
         return render_template(
             'index.html',
