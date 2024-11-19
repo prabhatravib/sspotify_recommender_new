@@ -9,18 +9,18 @@ playlist_link = None
 
 @app.route('/')
 def home():
-    # Render the homepage
-    return render_template('index.html')
+    # Render the homepage with the existing playlist (if any)
+    return render_template('index.html', playlist_link=playlist_link)
 
 @app.route('/submit_playlist', methods=['POST'])
 def submit_playlist():
     global playlist_link
     playlist_url = request.form.get('playlist_url')
     if not playlist_url:
-        return render_template('index.html', error="Please provide a valid playlist URL.")
+        return render_template('index.html', error="Please provide a valid playlist URL.", playlist_link=playlist_link)
     
     playlist_link = playlist_url
-    return render_template('index.html', success="Musical taste understood! You can now get song recommendations.")
+    return render_template('index.html', success="Musical taste understood! You can now get song recommendations.", playlist_link=playlist_link)
 
 @app.route('/get_recommendation', methods=['POST'])
 def get_recommendation():
@@ -31,9 +31,9 @@ def get_recommendation():
     # Generate a recommendation
     result = process_playlist_and_recommend_song(playlist_link)
     if result['recommendation']:
-        return render_template('results.html', recommendation=result['recommendation'])
+        return render_template('results.html', recommendation=result['recommendation'], playlist_link=playlist_link)
     else:
-        return render_template('index.html', error=result['message'])
+        return render_template('index.html', error=result['message'], playlist_link=playlist_link)
 
 if __name__ == '__main__':
     # Use host 0.0.0.0 for deployment and PORT environment variable
