@@ -40,7 +40,7 @@ def get_recommendation():
 
     try:
         # Simulate a recommendation process
-        recommendation = "Song Name - Album Name"
+        recommendation = "Shape of You - Divide"
         return render_template(
             'results.html',
             message="Musical taste understood",
