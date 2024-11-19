@@ -45,7 +45,8 @@ def get_recommendation():
         recommendation = result.get("recommendation", None)
         message = result.get("message", "Something went wrong")
 
-        # Debugging: Log the generated recommendation
+        # Debugging: Log the generated recommendation and message
+        print(f"Generated Message: {message}")
         print(f"Generated Recommendation: {recommendation}")
 
         return render_template(
@@ -55,6 +56,8 @@ def get_recommendation():
             playlist_link=playlist_link
         )
     except Exception as e:
+        # Log the exception
+        print(f"Error: {e}")
         return render_template(
             'index.html',
             error=f"An error occurred while processing the playlist: {e}",
