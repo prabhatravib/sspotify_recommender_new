@@ -42,8 +42,12 @@ def get_recommendation():
     try:
         # Call the function to process the playlist and get a recommendation
         result = process_playlist_and_recommend_song(playlist_link)
-        recommendation = result.get("recommendation", "No recommendation available")
+        recommendation = result.get("recommendation", None)
         message = result.get("message", "Something went wrong")
+
+        # Debugging: Log the generated recommendation
+        print(f"Generated Recommendation: {recommendation}")
+
         return render_template(
             'results.html',
             message=message,
